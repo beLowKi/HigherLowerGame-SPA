@@ -1,0 +1,15 @@
+<div class="d-flex vh-100 justify-content-center align-items-center">
+    <div class="text-center">
+        <h1 style="font-size: 130px;">GAME OVER</h1>
+        <h1 class="m-3 mb-5">Final score: {{score || 0}}</h1>
+        <!-- <p class="m-3 mb-5">{{getEndMessage()}}</p> -->
+        <span>
+            <button (click)="toHomePage()" class="btn m-2 btn-primary" style="width: 160px; height: 70px">
+                Back to menu
+            </button>
+            <button (click)="restart()" class="btn m-2 btn-primary" style="width: 160px; height: 70px">
+                Play again
+            </button>            
+        </span>
+    </div>
+</div>

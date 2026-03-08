@@ -1,0 +1,26 @@
+<div class="container-fluid p-0 mx-0 vh-100">
+    <div class="card mx-0 pt-3 pb-5 px-3 border-0 text-center bg-dark overflow-hidden" style="height: 100%; width: 100%; color: white">                    
+            <div class="d-flex pb-5" style="height: 70%; width: 100%">
+                <img class="card-img img-fluid object-fit-contain mh-100" 
+                    src="{{getImage()}}"
+                    alt="{{getName()}} thumbnail">
+            </div>
+            <div class="card-body" style="height: 35%;">
+                <h1 class="card-title">{{getName()}}</h1>
+                <br>
+                <div>
+                    @if (revealed) {
+                        <h3 class="card-text">{{getSizeDisplay()}}</h3>
+                    } @else {
+                        <button (click)="higherClicked()" class="btn btn-primary higherlower-button">
+                            Higher
+                        </button>
+                        <br><br>
+                        <button (click)="lowerClicked()" class="btn btn-primary higherlower-button">
+                            Lower
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+</div>

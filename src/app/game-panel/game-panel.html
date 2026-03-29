@@ -1,27 +1,50 @@
 @let screenWidth = this.screenWidth();
 @let useFitCover = screenWidth && screenWidth <= objectFitCoverMaxWidth;
 
-<div class="game-panel card bg-dark border-0 border-radius-0 rounded-0">
-    <img class="game-image card-img-top rounded-0"
-            [ngClass]="useFitCover ? 'object-fit-cover' : 'object-fit-fill'"
-            [src]="this.getImage()"
-            alt="{{this.getName()}} thumbnail">
-    <div class=".game-panel-overlay container-fluid card-img-overlay d-flex flex-column justify-content-end">
-        <div class="game-info d-flex flex-column justify-content-center">
-            <div class="row text-outline">
-                <h1 class="game-info-title display-4 overflow-hidden">{{this.getName()}}</h1>
-                @if (this.revealed()) {
-                    <h2 class="game-info-size display-6 overflow-hidden">{{this.getSizeDisplay()}}</h2>
-                }
-            </div>
-            @if (!this.revealed()) {
-                <div class="game-panel-button-flex-container row d-flex justify-content-center align-items-center">
-                    <div class="game-panel-button-container container-fluid">
-                        <button class="game-panel-button" (click)="this.higherClicked()">Higher</button>
-                        <button class="game-panel-button" (click)="this.lowerClicked()">Lower</button>
+<div class="card container-fluid bg-dark border-0 border-radius-0 rounded-0 h-100 w-100 m-0 p-0">
+    @if (!this.loaded()) {
+        <h1 style="color: white;">Loading...</h1>
+        
+    } @else {
+        <img class="game-image card-img-top"
+                [src]="this.getImage()"
+                alt="{{this.getName()}} thumbnail">
+    
+        @let revealed = this.revealed();
+        
+        <!-- 
+            Adding this centers the title and totalSize display of revealed panels
+            [ngClass]="{'justify-content-center': revealed, 'justify-content-end': !revealed}" 
+        -->
+        <div class="col game-panel-overlay container-fluid card-img-overlay">
+            <div class="game-info">
+                @let name = this.getName().trim();
+    
+                <!-- Name & file size -->
+                <div class="row h-100 text-outline justify-content-center align-items-center">
+                    <div class="col m-0 p-0">
+                        <div class="game-info-title row container-fluid">
+                            <h1 class="display-5 w-100 text-center" *ngIf="name">“{{name}}”</h1>
+                            <h3 class="w-100 text-center" *ngIf="name">is</h3>
+                        </div>
+                        @if (revealed) {
+                            <div class="game-info-title row container-fluid">
+                                <h3 class="display-5 w-100 text-center">{{this.getSizeDisplay()}}</h3>
+                            </div>
+                        }
                     </div>
                 </div>
-            } 
+    
+                <!-- Buttons -->
+                @if (!revealed) {
+                    <div class="row h-100">
+                        <div class="col game-panel-button-container">
+                            <button class="game-panel-button" (click)="this.higherClicked()">Higher</button>
+                            <button class="game-panel-button" (click)="this.lowerClicked()">Lower</button>
+                        </div>
+                    </div>
+                } 
+            </div>
         </div>
-    </div>
+    }
 </div>

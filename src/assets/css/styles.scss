@@ -1,4 +1,6 @@
-/* You can add global styles to this file, and also import other style files */
+@import "bootstrap/scss/bootstrap";
+@import "bootstrap/scss/variables";
+
 body html {
     margin: 0;
     padding: 0;
@@ -11,7 +13,7 @@ app-root {
 }
 
 :root {
-    --app-mobile-width: 900px;
+    --app-mobile-width: 768px;
 }
 
 .text-outline {

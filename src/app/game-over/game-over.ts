@@ -8,7 +8,7 @@ import { GameLogic } from '../services/game-logic/game-logic';
   selector: 'app-game-over',
   imports: [CommonModule],
   templateUrl: './game-over.html',
-  styleUrl: './game-over.css',
+  styleUrl: './game-over.scss',
   // providers: [GameLogic]
 })
 export class GameOver implements OnInit {

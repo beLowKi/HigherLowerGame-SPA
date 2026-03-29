@@ -17,7 +17,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
   selector: 'app-game-panel',
   imports: [CommonModule],
   templateUrl: './game-panel.html',
-  styleUrl: './game-panel.css',
+  styleUrl: './game-panel.scss',
   providers: [AppData],
   changeDetection: ChangeDetectionStrategy.Default
 })
@@ -54,6 +54,12 @@ export class GamePanel implements OnInit {
   private _isVisible : WritableSignal<boolean> = signal(true);
   readonly isVisible = this._isVisible.asReadonly();
   
+  // Updates after desktop and mobile images are loaded
+  // Used in layout to display loading gif
+  private _loaded : WritableSignal<boolean> = signal(false);
+  readonly loaded = this._loaded.asReadonly();
+  
+
   constructor(
     private renderer : Renderer2,
     private appData : AppData,
@@ -74,6 +80,10 @@ export class GamePanel implements OnInit {
     }
     
     const inMobile = width <= APP_CONSTANTS.MOBILE_WIDTH_PX;
+    // console.log(
+    //   `Screen width: ${width} - ` + 
+    //   `Mobile width: ${APP_CONSTANTS.MOBILE_WIDTH_PX}`
+    // );
     if (inMobile != this._inMobile()) {
       this._inMobile.set(inMobile);
     }
@@ -200,6 +210,11 @@ export class GamePanel implements OnInit {
         // bypassing Angular's security checks
         this.mobileImageObjectUrl = URL.createObjectURL(value);
         this._mobileImageUrl.set(this.sanitizer.bypassSecurityTrustUrl(this.mobileImageObjectUrl));
+
+        // Updating 'loaded'
+        if (this._desktopImageUrl()) {
+          this._loaded.set(true);
+        }
       },
 
       error: (err: any) => {
@@ -215,7 +230,11 @@ export class GamePanel implements OnInit {
         this.desktopImageObjectUrl = URL.createObjectURL(value);
         // this._desktopImageUrl.set(this.sanitizer.bypassSecurityTrustHtml(this.desktopImageObjectUrl));
         this._desktopImageUrl.set(this.sanitizer.bypassSecurityTrustUrl(this.desktopImageObjectUrl));
-
+        
+        // Updating 'loaded'
+        if (this._desktopImageUrl()) {
+          this._loaded.set(true);
+        }
       },
 
       error: (err: any) => {

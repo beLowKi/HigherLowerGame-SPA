@@ -1,0 +1,75 @@
+@import "bootstrap/scss/bootstrap";
+
+@mixin home-page-base {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow: hidden;
+    // background-color: blue;
+}
+@mixin home-page-item-container-base {
+    height: 50%;
+    width: 100%;
+    padding: 10px;
+    gap: 15px;
+}
+@mixin home-page-text-container-base {
+    width: 100%;
+    padding: 0;
+    text-align: center;
+}
+@mixin home-page-button-container-base {
+    height: 40%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    // background-color: blue;
+}
+@mixin home-page-button-base {
+    height: 50%;
+    border-radius: 100px;
+}
+
+
+// Desktop layout
+@include media-breakpoint-up(md) {
+    .home-page {
+        @include home-page-base();
+    }
+    .home-page-item-container {
+        @include home-page-item-container-base();
+    }
+    .home-page-text-container {
+        @include home-page-text-container-base();
+    }
+    .home-page-button-container {
+        @include home-page-button-container-base();
+    }
+    .home-page-button {
+        @include home-page-button-base();
+    }
+}
+
+
+// Mobile layout
+@include media-breakpoint-down(md) {
+    .home-page {
+        @include home-page-base();
+    }
+    .home-page-item-container {
+        @include home-page-item-container-base();
+    }
+    .home-page-text-container {
+        @include home-page-text-container-base();
+    }
+    .home-page-button-container {
+        @include home-page-button-container-base();
+    }
+    .home-page-button {
+        @include home-page-button-base()
+    }
+}

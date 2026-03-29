@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable, signal, WritableSignal } from '@angular/core';
-import { BehaviorSubject, empty, firstValueFrom, } from 'rxjs';
+import { firstValueFrom, } from 'rxjs';
 
 import { SteamApp } from '../../models/steam_app';
 import { AppData } from '../app-data/app-data';
@@ -7,7 +7,7 @@ import { AppData } from '../app-data/app-data';
 import { LRUCache } from 'lru-cache';
 
 // NOTE < 4 will mess with GamePage scrolling
-export const GAME_QUEUE_SIZE : number = 3;
+export const GAME_QUEUE_SIZE : number = 15;
 
 // Difficulty scaling variables
 // Uses exponential decay formula: y(x) = Ae^(kx) + C
@@ -190,7 +190,12 @@ export class GameLogic {
 
   // Returns the current range for SteamApps' totalSize 
   // based on score and sizes of recently shown games.  
-  getSizeBounds() : {$gt: number, $lte: number} {
+  getSizeBounds() : {$gte: number, $lte?: number} {
+    const score : number = this._score();
+    if (score <= 0) {
+      return { $gte: 1 }
+    }
+    
     // Calculating baseSize for totalSize range
     const gameSizes : number[] = [...this.gamesCache.values()];
     let baseSize : number = 0;
@@ -205,11 +210,18 @@ export class GameLogic {
     
     // Depending on score, determine range
     const maxDiff : number = BASE_SIZE_RANGE * 
-      Math.E^(SIZE_RANGE_DECAY_RATE * this._score()) + MINIMUM_TOTALSIZE_RANGE;
+      Math.E^(SIZE_RANGE_DECAY_RATE * score) + MINIMUM_TOTALSIZE_RANGE;
 
+    const min: number = Math.max(1, baseSize - maxDiff); 
+    const max: number = ( baseSize + maxDiff );
+    // console.log(
+    //   `Size bounds: [${min}, ${max}]\n` + 
+    //   `\nBase size: ${baseSize}` +
+    //   `\nScore: ${score}`
+    // )
     return {
-      $gt: Math.max(0, baseSize - maxDiff),
-      $lte: ( baseSize + maxDiff )
+      $gte: min,
+      $lte: max
     }
   }
 

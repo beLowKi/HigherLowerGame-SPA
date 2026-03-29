@@ -3,6 +3,7 @@ import {
   ViewChild, ViewChildren, QueryList, 
   ElementRef, EventEmitter, HostListener, 
 } from '@angular/core';
+  
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -15,7 +16,7 @@ import { SteamApp } from '../models/steam_app';
   selector: 'app-game-page',
   imports: [CommonModule, GamePanel],
   templateUrl: './game-page.html',
-  styleUrl: './game-page.css',
+  styleUrl: './game-page.scss',
   providers: [AppData],
 })
 export class GamePage implements OnInit {    

@@ -1,18 +1,18 @@
-<div class="container-fluid">
-    <div class="panel-container" #panelContainer>
+<div class="container-fluid m-0 p-0 overflow-hidden">
+    <div class="game-panel-container" #panelContainer>
         @for (app of this.activeApps(); track app) {
             @let isFirst = $index === 0;
             <app-game-panel #panelRef
                 class="game-panel-slot"
                 [app]="app"
                 [initRevealed]="isFirst"
-                
                 (buttonSelected)="onPanelButtonSelected($event)"
                 >
                 Loading...
             </app-game-panel>
         } @empty {
             <div class="d-flex h-100 w-100 justify-content-center align-items-center">
+                <!-- TODO loading gif -->
                 <h1>Could not load any games. Try again later.</h1>
             </div>
         }

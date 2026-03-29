@@ -1,9 +1,11 @@
-<div class="d-flex vh-100 justify-content-center align-items-center">
-    <div class="container text-center p-5">
-        <h1 class="px-5">Higher or Lower: Game Edition</h1>
-        <h4 class="pt-2 pb-3">Guess video game file sizes!</h4>
-        <button (click)="startNewGame()" class="btn btn-primary m-3" style="height: 60px; width: 180px">
-            Start Game
-        </button>
+<div class="home-page">
+    <div class="home-page-item-container">
+        <div class="row home-page-text-container">
+            <h1 class="display-1 w-100 text-center">{{this.appName}}</h1>
+            <h3 class="display-5 w-100 text-center">{{this.appDescription}}</h3>
+        </div>
+        <div class="row home-page-button-container">
+            <button class="home-page-button w-50" (click)="startNewGame()">Start Game</button>
+        </div>
     </div>
 </div>

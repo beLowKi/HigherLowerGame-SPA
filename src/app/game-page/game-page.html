@@ -1,48 +1,20 @@
-@let game1 = game.game1() || null;
-@let game2 = game.game2() || null;
-
-<div class="row g-0 mx-0 px-0" style="height: 100%">
-    <div class="col">
-        @if (game1) {
-            <app-game-panel [app]=game1 [revealed]=true></app-game-panel>
-        } @else {
-            <div class="d-flex vh-100 text-center justify-content-center  align-items-center">
-                <!-- TODO loading gif -->
-                <p>Loading...</p>
-            </div>
-        }
-    </div>
-    <div class="col">
-        @if (game2) {
-            <app-game-panel [app]=game2 [revealed]=false></app-game-panel>
-        } @else {
-            <div class="d-flex vh-100 text-center justify-content-center align-items-center">
-                <!-- TODO loading gif -->
-                <p>Loading...</p>
+<div class="container-fluid">
+    <div class="panel-container" #panelContainer>
+        @for (app of this.activeApps(); track app) {
+            @let isFirst = $index === 0;
+            <app-game-panel #panelRef
+                class="game-panel-slot"
+                [app]="app"
+                [initRevealed]="isFirst"
+                
+                (buttonSelected)="onPanelButtonSelected($event)"
+                >
+                Loading...
+            </app-game-panel>
+        } @empty {
+            <div class="d-flex h-100 w-100 justify-content-center align-items-center">
+                <h1>Could not load any games. Try again later.</h1>
             </div>
         }
     </div>
 </div>
-
-<!-- <div class="container-fluid vh-100 vw-100 px-0">
-    <div class="row gx-0">
-        <div class="col">
-            <div class="d-flex-fluid vh-100 bg-secondary">
-                @if (game1) {
-                    <app-game-panel [app]=game1 [revealed]=true></app-game-panel>
-                } @else {
-                    <p>Loading...</p>
-                }
-            </div>
-        </div>
-        <div class="col">
-            <div class="d-flex-fluid vh-100 bg-secondary justify-content-center align-items-center">
-                @if (game2) {
-                    <app-game-panel [app]=game2 [revealed]=false></app-game-panel>
-                } @else {
-                    <p>Loading...</p>
-                }
-            </div>
-        </div>
-    </div>
-</div> -->

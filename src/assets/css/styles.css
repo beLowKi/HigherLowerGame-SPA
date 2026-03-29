@@ -1,1 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
+body html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+app-root {
+    display: block;
+    min-width: 800px;
+}
+
+:root {
+    --app-mobile-width: 900px;
+}
+
+.text-outline {
+    --outline-color: #000;
+    
+    /* Created at https://html-css-js.com/css/generator/text-shadow/ */
+    color: #FFFFFF;
+    text-shadow: 
+        3px 3px 0       var(--outline-color), 
+        3px -3px 0      var(--outline-color), 
+        -3px 3px 0      var(--outline-color), 
+        -3px -3px 0     var(--outline-color), 
+        3px 0px 0       var(--outline-color), 
+        0px 3px 0       var(--outline-color), 
+        -3px 0px 0      var(--outline-color), 
+        0px -3px 0      var(--outline-color);
+}

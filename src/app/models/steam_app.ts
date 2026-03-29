@@ -1,5 +1,7 @@
 export class SteamApp {
     appId: number;
+    appType: string;
+    images: { [key:string]: string };
     names: { [key:string]: string };
     totalSize: number;
     downloadSize: number;
@@ -9,6 +11,8 @@ export class SteamApp {
     
     constructor() {
         this.appId = -1;
+        this.appType = "";
+        this.images = {};
         this.names = {};
         this.totalSize = -1;
         this.downloadSize = -1;

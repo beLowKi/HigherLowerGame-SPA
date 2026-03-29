@@ -1,26 +1,27 @@
-<div class="container-fluid p-0 mx-0 vh-100">
-    <div class="card mx-0 pt-3 pb-5 px-3 border-0 text-center bg-dark overflow-hidden" style="height: 100%; width: 100%; color: white">                    
-            <div class="d-flex pb-5" style="height: 70%; width: 100%">
-                <img class="card-img img-fluid object-fit-contain mh-100" 
-                    src="{{getImage()}}"
-                    alt="{{getName()}} thumbnail">
+@let screenWidth = this.screenWidth();
+@let useFitCover = screenWidth && screenWidth <= objectFitCoverMaxWidth;
+
+<div class="game-panel card bg-dark border-0 border-radius-0 rounded-0">
+    <img class="game-image card-img-top rounded-0"
+            [ngClass]="useFitCover ? 'object-fit-cover' : 'object-fit-fill'"
+            [src]="this.getImage()"
+            alt="{{this.getName()}} thumbnail">
+    <div class=".game-panel-overlay container-fluid card-img-overlay d-flex flex-column justify-content-end">
+        <div class="game-info d-flex flex-column justify-content-center">
+            <div class="row text-outline">
+                <h1 class="game-info-title display-4 overflow-hidden">{{this.getName()}}</h1>
+                @if (this.revealed()) {
+                    <h2 class="game-info-size display-6 overflow-hidden">{{this.getSizeDisplay()}}</h2>
+                }
             </div>
-            <div class="card-body" style="height: 35%;">
-                <h1 class="card-title">{{getName()}}</h1>
-                <br>
-                <div>
-                    @if (revealed) {
-                        <h3 class="card-text">{{getSizeDisplay()}}</h3>
-                    } @else {
-                        <button (click)="higherClicked()" class="btn btn-primary higherlower-button">
-                            Higher
-                        </button>
-                        <br><br>
-                        <button (click)="lowerClicked()" class="btn btn-primary higherlower-button">
-                            Lower
-                        </button>
-                    }
+            @if (!this.revealed()) {
+                <div class="game-panel-button-flex-container row d-flex justify-content-center align-items-center">
+                    <div class="game-panel-button-container container-fluid">
+                        <button class="game-panel-button" (click)="this.higherClicked()">Higher</button>
+                        <button class="game-panel-button" (click)="this.lowerClicked()">Lower</button>
+                    </div>
                 </div>
-            </div>
+            } 
         </div>
+    </div>
 </div>

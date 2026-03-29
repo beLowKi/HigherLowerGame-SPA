@@ -1,4 +1,172 @@
-.higherlower-button {
-    width: 30%;
-    height: 60px;
+/* Default layout */
+:host {
+    --slide-duration: 500ms;
+    --slide-translation: -100%; 
+    --slide-out-duration: 1000ms;
+    --slide-out-translation: -200%;
+}
+:host(.fade-in) {
+    animation: fade-in 200ms ease-out forwards;
+}
+:host(.slide-out) {
+    animation: slide-out var(--slide-out-duration) ease-out forwards;
+}
+:host(.slide-over) {
+    animation: slide-over var(--slide-out-duration) ease-out forwards;
+}
+
+
+/* Initial load */
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1;; }
+}
+
+/* Cycle transition */
+/* @keyframes slide-in {
+    99% {
+        transform: translateX(-100%);
+    }
+    100% {
+        translate: 0;
+    }
+} */
+@keyframes slide-over {
+    to {
+        /* transform: translateX(calc(-1 * var(--slide-translation))); */
+        /* transform: translateX(var(--slide-translation)); */
+        /* transform: translateX(--slide-translation); */
+        transform: translateX(-100%);
+    }
+}
+@keyframes slide-out {
+    to {
+        /* transform: translateX(calc(-2 * var(--slide-translation))); */
+        transform: translateX(var(--slide-out-translation));
+    }
+}
+
+
+/* Classes */
+.game-panel {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+.game-image-container {
+    height: 50%;
+}
+.game-image {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    opacity: 0.65;
+    filter: blur(4px);
+}
+.game-panel-overlay {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
+.game-info {
+    height: 50%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+.game-info-title {
+    text-align: center;
+    text-anchor: middle;
+    font-family: 'FF Din Bold', monospace;
+}
+.game-info-size {
+    text-align: center;
+    text-anchor: middle;
+    font-family: 'FF Din Bold', monospace;
+}
+
+.game-panel-button-flex-container {
+    padding: 10px;
+}
+.game-panel-button-container {
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+}
+.game-panel-button {
+    display: block;
+    width: 100%;
+    border-radius: 30px;
+    padding: 15px;
+    margin-top: 5px;
+}
+
+
+/* Smaller viewport config */
+@media (max-width: 900px) {
+    /* :host(.slide-in) {
+        animation: slide-in-mobile 500ms ease-out forwards;
+    } */
+    :host(.slide-out) {
+        animation: slide-out-mobile 2*var(--slide-duration) ease-out forwards;
+    }
+    :host(.slide-over) {
+        animation: slide-over-mobile var(--slide-duration) ease-out forwards;
+    }
+    
+    .game-panel {
+        height: 100%;
+        width: 100%;
+        margin: 0%;
+        padding: 1%;
+        background-color: white;
+    }
+    .game-image-container {
+        height: 60%;
+    }
+    .game-image {
+
+    }
+    .game-info {
+        height: 40%;
+        padding: 20px;
+    }
+    .higherlower-button-container {
+        display: inline-block;
+        height: 100%;
+        width: 50%;
+        padding: 10px;
+    }
+    .higherlower-button {
+        height: 80px;
+    }
+
+    /* Cycle transition */
+    /* @keyframes slide-in-mobile {
+        99% {
+            transform: translateY(-100%);
+        }
+        100% {
+            translate: 0 0;
+        }
+    } */
+    @keyframes slide-over-mobile {
+        99% {
+            transform: translateY(-100%);
+        }
+        100% {
+            translate: 0 0;
+        }
+    }
+    @keyframes slide-out-mobile {
+        99% {
+            transform: translateY(-100%);
+        }
+        100% {
+            translate: 0 0;
+        }
+    }
 }

@@ -26,6 +26,7 @@ export class GameOver implements OnInit {
   }
   
   restart() : void {
+    this.game.reset();
     this.router.navigate(['game-page']);
   }
   

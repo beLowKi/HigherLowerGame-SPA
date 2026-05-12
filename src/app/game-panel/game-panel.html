@@ -2,49 +2,50 @@
 @let useFitCover = screenWidth && screenWidth <= objectFitCoverMaxWidth;
 
 <div class="card container-fluid bg-dark border-0 border-radius-0 rounded-0 h-100 w-100 m-0 p-0">
-    @if (!this.loaded()) {
-        <h1 style="color: white;">Loading...</h1>
-        
-    } @else {
-        <img class="game-image card-img-top"
+    <ngx-spinner 
+        [fullScreen]="false" 
+        type="line-scale" 
+        size="large">
+    </ngx-spinner>
+    
+    <img class="game-image card-img-top"
                 [src]="this.getImage()"
-                alt="{{this.getName()}} thumbnail">
-    
-        @let revealed = this.revealed();
+        alt="{{this.getName()}} thumbnail">
+
         
-        <!-- 
-            Adding this centers the title and totalSize display of revealed panels
-            [ngClass]="{'justify-content-center': revealed, 'justify-content-end': !revealed}" 
-        -->
-        <div class="col game-panel-overlay container-fluid card-img-overlay">
-            <div class="game-info">
-                @let name = this.getName().trim();
-    
-                <!-- Name & file size -->
-                <div class="row h-100 text-outline justify-content-center align-items-center">
-                    <div class="col m-0 p-0">
+    <!-- 
+        Adding this centers the title and totalSize display of revealed panels
+        [ngClass]="{'justify-content-center': revealed, 'justify-content-end': !revealed}" 
+    -->
+    @let revealed = this.revealed();
+    <div class="col game-panel-overlay container-fluid card-img-overlay">
+        <div class="game-info">
+            @let name = this.getName().trim();
+
+            <!-- Name & file size -->
+            <div class="row h-100 text-outline justify-content-center align-items-center">
+                <div class="col m-0 p-0">
+                    <div class="game-info-title row container-fluid">
+                        <h1 class="display-5 w-100 text-center" *ngIf="name">“{{name}}”</h1>
+                        <h3 class="w-100 text-center" *ngIf="name">is</h3>
+                    </div>
+                    @if (revealed) {
                         <div class="game-info-title row container-fluid">
-                            <h1 class="display-5 w-100 text-center" *ngIf="name">“{{name}}”</h1>
-                            <h3 class="w-100 text-center" *ngIf="name">is</h3>
+                            <h3 class="display-5 w-100 text-center">{{this.getSizeDisplay()}}</h3>
                         </div>
-                        @if (revealed) {
-                            <div class="game-info-title row container-fluid">
-                                <h3 class="display-5 w-100 text-center">{{this.getSizeDisplay()}}</h3>
-                            </div>
-                        }
+                    }
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            @if (!revealed) {
+                <div class="row h-100">
+                    <div class="col game-panel-button-container">
+                        <button class="game-panel-button" (click)="this.higherClicked()">Higher</button>
+                        <button class="game-panel-button" (click)="this.lowerClicked()">Lower</button>
                     </div>
                 </div>
-    
-                <!-- Buttons -->
-                @if (!revealed) {
-                    <div class="row h-100">
-                        <div class="col game-panel-button-container">
-                            <button class="game-panel-button" (click)="this.higherClicked()">Higher</button>
-                            <button class="game-panel-button" (click)="this.lowerClicked()">Lower</button>
-                        </div>
-                    </div>
-                } 
-            </div>
+            } 
         </div>
-    }
+    </div>
 </div>

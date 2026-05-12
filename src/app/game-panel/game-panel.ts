@@ -4,7 +4,9 @@ import {
   WritableSignal, signal, 
   HostListener,
 } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
+import { NgxSpinnerService, NgxSpinnerComponent  } from 'ngx-spinner';
 
 import { APP_CONSTANTS } from '../shared/app.constants';
 import { AppData } from '../services/app-data/app-data';
@@ -15,7 +17,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-game-panel',
-  imports: [CommonModule],
+  imports: [CommonModule, NgxSpinnerComponent],
   templateUrl: './game-panel.html',
   styleUrl: './game-panel.scss',
   providers: [AppData],
@@ -65,6 +67,7 @@ export class GamePanel implements OnInit {
     private appData : AppData,
     private game : GameLogic,
     private sanitizer : DomSanitizer,
+    private spinner: NgxSpinnerService,
     public el: ElementRef,
   ) {}
   
@@ -198,11 +201,9 @@ export class GamePanel implements OnInit {
   
 
   ngOnInit(): void {
-    // console.log(this.initRevealed);
-    // console.log('\t' + this.initHidden);
+    this.spinner.show();
     this._revealed.set(this.initRevealed);
-    // this._isVisible.set(!this.initHidden);
-    
+
     // Loading mobile image
     this.appData.getAppMobileImage(this.app)?.subscribe({
       next: (value: Blob) => {
@@ -212,8 +213,9 @@ export class GamePanel implements OnInit {
         this._mobileImageUrl.set(this.sanitizer.bypassSecurityTrustUrl(this.mobileImageObjectUrl));
 
         // Updating 'loaded'
-        if (this._desktopImageUrl()) {
+        if (!this._loaded() && this._desktopImageUrl()) {
           this._loaded.set(true);
+          this.spinner.hide();
         }
       },
 
@@ -232,8 +234,9 @@ export class GamePanel implements OnInit {
         this._desktopImageUrl.set(this.sanitizer.bypassSecurityTrustUrl(this.desktopImageObjectUrl));
         
         // Updating 'loaded'
-        if (this._desktopImageUrl()) {
+        if (!this._loaded() && this._desktopImageUrl()) {
           this._loaded.set(true);
+          this.spinner.hide();
         }
       },
 
